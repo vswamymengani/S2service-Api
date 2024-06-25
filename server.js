@@ -48,18 +48,25 @@ app.get("/user/:id", (req, res) => {
   });
 });
 
-//api for all users
-app.get("/user", (req, res) => {
-  const sql = "SELECT * FROM s2service ";
+app.get("/profile", (req, res) => {
+  const email = req.query.email;
 
-  db.query(sql, (err, result) => {
+  const sql = "SELECT fullname, gender, email, mobile, presentaddress FROM s2customer WHERE email = ?";
+  
+  db.query(sql, [email], (err, result) => {
     if (err) {
-      console.error("Error fetching users:", err);
+      console.error("Error fetching profile details:", err);
       return res.json({ message: "Something unexpected has occurred" });
     }
-    return res.json({ users: result }); // Changed key to 'users'
+    
+    if (result.length > 0) {
+      return res.json({ success: true, profile: result[0] });
+    } else {
+      return res.json({ success: false, message: "User not found" });
+    }
   });
 });
+
 
 //api for new user
 app.post("/register", (req, res) => {
@@ -70,27 +77,63 @@ app.post("/register", (req, res) => {
     }
 
     const sql =
-    "INSERT INTO s2service (usertype,fullname,gender, email,mobile,presentaddress, password, confirmpassword) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
+    "INSERT INTO s2customer (fullname, gender, email, mobile, presentaddress, password, confirmpassword) VALUES (?, ?, ?, ?, ?, ?, ? ) ";
     
     const values = [
-      req.body.usertype,
       req.body.fullname,
       req.body.gender,
       req.body.email,
       req.body.mobile,
-      req.body.presentaddress, // Corrected the order of values
-      hashedPassword, // Store hashed password in the database
-      req.body.confirmpassword, // Include value for confirmpassword
+      req.body.presentaddress,
+      hashedPassword,
+      req.body.confirmpassword
     ];
-     db.query(sql, values, (err, result) => {
+    
+    console.log('Inserting user with values:', values);
+
+    db.query(sql, values, (err, result) => {
       if (err) {
         console.error("Error inserting user:", err);
-        return res.json({ message: "Something unexpected has occurred" + err });
+        return res.json({ message: "Something unexpected has occurred" });
       }
       return res.json({ success: "User added successfully" });
     });
   });
 });
+ 
+app.post("/register1", (req, res) => {
+  bcrypt.hash(req.body.password.toString(), saltRounds, (err, hashedPassword) => {
+    if (err) {
+      console.error("Error hashing password:", err);
+      return res.json({ message: "Server error" });
+    }
+
+    const sql =
+    "INSERT INTO s2technician (fullname, gender, email, mobile, presentaddress, workExperience, password, confirmpassword) VALUES (?, ?, ?, ?, ?, ?, ?, ? ) ";
+    
+    const values = [
+      req.body.fullname,
+      req.body.gender,
+      req.body.email,
+      req.body.mobile,
+      req.body.presentaddress,
+      req.body.workExperience,
+      hashedPassword,
+      req.body.confirmpassword
+    ];
+    
+    console.log('Inserting user with values:', values);
+
+    db.query(sql, values, (err, result) => {
+      if (err) {
+        console.error("Error inserting user:", err);
+        return res.json({ message: "Something unexpected has occurred" });
+      }
+      return res.json({ success: "User added successfully" });
+    });
+  });
+});
+
 
 //api for delete account for existing user
 app.delete("/user/:email", (req, res) => {
@@ -112,7 +155,7 @@ app.delete("/user/:email", (req, res) => {
 
 // api for existing and new user authentiction and checking new user or existing user
 app.post('/login', (req, res) => {
-  const sql = 'SELECT * FROM s2service WHERE email = ?';
+  const sql = 'SELECT * FROM s2customer WHERE email = ?';
   db.query(sql, [req.body.email], (err, data) => {
     if (err) {
       console.error("Error querying database:", err);
@@ -135,6 +178,33 @@ app.post('/login', (req, res) => {
     }
   });
 });
+
+// api for existing and new user authentiction and checking new user or existing user
+app.post('/login1', (req, res) => {
+  const sql = 'SELECT * FROM s2technician WHERE email = ?';
+  db.query(sql, [req.body.email], (err, data) => {
+    if (err) {
+      console.error("Error querying database:", err);
+      return res.json({ Error: "Login error in server" });
+    }
+    if (data.length > 0) {
+      bcrypt.compare(req.body.password.toString(), data[0].password, (err, response) => {
+        if (err) {
+          console.error("Error comparing passwords:", err);
+          return res.json({ Error: "Error comparing passwords" });
+        }
+        if (response) {
+          return res.json({ Status: "Success" });
+        } else {
+          return res.json({ Error: "Password not matched" });
+        }
+      });
+    } else {
+      return res.json({ Error: "Email not exists" });
+    }
+  });
+});
+
 
 //api for updating details of existing user
 app.put("/user/:id", (req, res) => {
