@@ -69,7 +69,7 @@ app.get("/profile", (req, res) => {
 
 
 //api for new user
-app.post("/register", (req, res) => {
+app.post("/registercustomer", (req, res) => {
   bcrypt.hash(req.body.password.toString(), saltRounds, (err, hashedPassword) => {
     if (err) {
       console.error("Error hashing password:", err);
@@ -101,7 +101,7 @@ app.post("/register", (req, res) => {
   });
 });
  
-app.post("/register1", (req, res) => {
+app.post("/registertechnician", (req, res) => {
   bcrypt.hash(req.body.password.toString(), saltRounds, (err, hashedPassword) => {
     if (err) {
       console.error("Error hashing password:", err);
@@ -118,6 +118,35 @@ app.post("/register1", (req, res) => {
       req.body.mobile,
       req.body.presentaddress,
       req.body.workExperience,
+      hashedPassword,
+      req.body.confirmpassword
+    ];
+    
+    console.log('Inserting user with values:', values);
+
+    db.query(sql, values, (err, result) => {
+      if (err) {
+        console.error("Error inserting user:", err);
+        return res.json({ message: "Something unexpected has occurred" });
+      }
+      return res.json({ success: "User added successfully" });
+    });
+  });
+});
+
+app.post("/registeradmin", (req, res) => {
+  bcrypt.hash(req.body.password.toString(), saltRounds, (err, hashedPassword) => {
+    if (err) {
+      console.error("Error hashing password:", err);
+      return res.json({ message: "Server error" });
+    }
+
+    const sql =
+    "INSERT INTO s2admin (email, password, confirmpassword) VALUES (?, ?, ? ) ";
+    
+    const values = [
+    
+      req.body.email,
       hashedPassword,
       req.body.confirmpassword
     ];
@@ -154,7 +183,7 @@ app.delete("/user/:email", (req, res) => {
 });
 
 // api for existing and new user authentiction and checking new user or existing user
-app.post('/login', (req, res) => {
+app.post('/logincustomer', (req, res) => {
   const sql = 'SELECT * FROM s2customer WHERE email = ?';
   db.query(sql, [req.body.email], (err, data) => {
     if (err) {
@@ -180,8 +209,34 @@ app.post('/login', (req, res) => {
 });
 
 // api for existing and new user authentiction and checking new user or existing user
-app.post('/login1', (req, res) => {
+app.post('/logintechnician', (req, res) => {
   const sql = 'SELECT * FROM s2technician WHERE email = ?';
+  db.query(sql, [req.body.email], (err, data) => {
+    if (err) {
+      console.error("Error querying database:", err);
+      return res.json({ Error: "Login error in server" });
+    }
+    if (data.length > 0) {
+      bcrypt.compare(req.body.password.toString(), data[0].password, (err, response) => {
+        if (err) {
+          console.error("Error comparing passwords:", err);
+          return res.json({ Error: "Error comparing passwords" });
+        }
+        if (response) {
+          return res.json({ Status: "Success" });
+        } else {
+          return res.json({ Error: "Password not matched" });
+        }
+      });
+    } else {
+      return res.json({ Error: "Email not exists" });
+    }
+  });
+});
+
+// api for existing and new user authentiction and checking new user or existing user
+app.post('/loginadmin', (req, res) => {
+  const sql = 'SELECT * FROM s2admin WHERE email = ?';
   db.query(sql, [req.body.email], (err, data) => {
     if (err) {
       console.error("Error querying database:", err);
@@ -207,13 +262,13 @@ app.post('/login1', (req, res) => {
 
 
 //api for updating details of existing user
-app.put("/user/:id", (req, res) => {
-  const { id } = req.params;
+app.put("/customer", (req, res) => {
+  const { email } = req.params;
 
   // Hash the password if it's provided
   const hashedPassword = req.body.password ? bcrypt.hashSync(req.body.password.toString(), saltRounds) : undefined;
 
-  const sql = "UPDATE s2service SET usertype=?, fullname=?, gender=?, email=?, mobile=?, presentaddress=?, password=? WHERE id=? ";
+  const sql = "UPDATE s2customer SET usertype=?, fullname=?, gender=?, email=?, mobile=?, presentaddress=?, password=? WHERE email=? ";
   const values = [
     req.body.usertype,
     req.body.fullname,
