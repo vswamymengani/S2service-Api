@@ -514,6 +514,54 @@ app.get('/api/LaptopService', (req, res) => {
   });
 });
 
+app.get('/api/MicrowaveService', (req, res) => {
+  const query = 'SELECT * FROM MicrowaveService';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/RefrigeratorService', (req, res) => {
+  const query = 'SELECT * FROM RefrigeratorService';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/TVService', (req, res) => {
+  const query = 'SELECT * FROM TVService';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/WashingMachineService', (req, res) => {
+  const query = 'SELECT * FROM WashingMachineService';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
 // Start server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
