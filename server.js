@@ -419,40 +419,40 @@ app.get('/api/ChimneyService', (req, res) => {
 });
 
 
-app.get('/api/Appliancerepair/:id', (req, res) => {
-  const AppliancerepairId = req.params.id;
-  const query = 'SELECT * FROM Appliancerepair WHERE id = ?';
-  db.query(query, [AppliancerepairId], (err, results) => {
-    if (err) {
-      console.error('Error fetching service details:', err);
-      res.status(500).send('Error fetching service details');
-      return;
-    }
-    if (results.length === 0) {
-      res.status(404).send('Service not found');
-      return;
-    }
-    res.json(results[0]);
-  });
-});
+// app.get('/api/Appliancerepair/:id', (req, res) => {
+//   const AppliancerepairId = req.params.id;
+//   const query = 'SELECT * FROM Appliancerepair WHERE id = ?';
+//   db.query(query, [AppliancerepairId], (err, results) => {
+//     if (err) {
+//       console.error('Error fetching service details:', err);
+//       res.status(500).send('Error fetching service details');
+//       return;
+//     }
+//     if (results.length === 0) {
+//       res.status(404).send('Service not found');
+//       return;
+//     }
+//     res.json(results[0]);
+//   });
+// });
 
-app.get('/api/image/:id', (req, res) => {
-  const AppliancerepairId = req.params.id;
-  const query = 'SELECT image FROM Appliancerepair WHERE id = ?';
-  db.query(query, [AppliancerepairId], (err, results) => {
-    if (err) {
-      console.error('Error fetching image:', err);
-      res.status(500).send('Error fetching image');
-      return;
-    }
-    if (results.length === 0) {
-      res.status(404).send('Image not found');
-      return;
-    }
-    res.contentType('image/jpeg');
-    res.send(results[0].image);
-  });
-});
+// app.get('/api/image/:id', (req, res) => {
+//   const AppliancerepairId = req.params.id;
+//   const query = 'SELECT image FROM Appliancerepair WHERE id = ?';
+//   db.query(query, [AppliancerepairId], (err, results) => {
+//     if (err) {
+//       console.error('Error fetching image:', err);
+//       res.status(500).send('Error fetching image');
+//       return;
+//     }
+//     if (results.length === 0) {
+//       res.status(404).send('Image not found');
+//       return;
+//     }
+//     res.contentType('image/jpeg');
+//     res.send(results[0].image);
+//   });
+// });
 
 app.get('/api/GastoveService', (req, res) => {
   const query = 'SELECT * FROM GastoveService';
@@ -552,6 +552,30 @@ app.get('/api/TVService', (req, res) => {
 
 app.get('/api/WashingMachineService', (req, res) => {
   const query = 'SELECT * FROM WashingMachineService';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/HomeRepair', (req, res) => {
+  const query = 'SELECT * FROM HomeRepair';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/Electrician', (req, res) => {
+  const query = 'SELECT * FROM Electrician';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
