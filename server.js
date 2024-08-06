@@ -585,6 +585,53 @@ app.get('/api/Electrician', (req, res) => {
     res.json(results);
   });
 });
+app.get('/api/Plumber', (req, res) => {
+  const query = 'SELECT * FROM Plumber';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/Carpenter', (req, res) => {
+  const query = 'SELECT * FROM Carpenter';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/CleaningService', (req, res) => {
+  const query = 'SELECT * FROM CleaningService';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/Full_Home_Cleaning', (req, res) => {
+  const query = 'SELECT * FROM Full_Home_Cleaning';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
 
 // Start server
 app.listen(port, () => {
