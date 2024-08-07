@@ -633,6 +633,79 @@ app.get('/api/Full_Home_Cleaning', (req, res) => {
   });
 });
 
+app.get('/api/KitchenCleanigService', (req, res) => {
+  const query = 'SELECT * FROM KitchenCleanigService';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/SofaCleaningService', (req, res) => {
+  const query = 'SELECT * FROM SofaCleaningService';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/PestControlService', (req, res) => {
+  const query = 'SELECT * FROM PestControlService';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/Cockroachcontrol', (req, res) => {
+  const query = 'SELECT * FROM Cockroachcontrol';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/TermiteControl', (req, res) => {
+  const query = 'SELECT * FROM TermiteControl';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/BedBugsControl', (req, res) => {
+  const query = 'SELECT * FROM BedBugsControl';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+
 // Start server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
