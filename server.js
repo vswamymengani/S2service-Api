@@ -705,7 +705,214 @@ app.get('/api/BedBugsControl', (req, res) => {
   });
 });
 
+ //PERSONAL SERVICES API'S
 
+
+app.get('/api/SalonForWomen', (req, res) => {
+  const query = 'SELECT * FROM SalonForWomen';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/SalonWomenLuxe', (req, res) => {
+  const query = 'SELECT * FROM SalonWomenLuxe';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/SalonWomenPrime', (req, res) => {
+  const query = 'SELECT * FROM SalonWomenPrime';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/SalonWomenClassic', (req, res) => {
+  const query = 'SELECT * FROM SalonWomenClassic';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/SpaForWomen', (req, res) => {
+  const query = 'SELECT * FROM SpaForWomen';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/Ayurveda', (req, res) => {
+  const query = 'SELECT * FROM Ayurveda';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+
+app.get('/api/SpaWomenPrime', (req, res) => {
+  const query = 'SELECT * FROM SpaWomenPrime';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/SpaWomenLuxe', (req, res) => {
+  const query = 'SELECT * FROM SpaWomenLuxe';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/HairStudioWomen', (req, res) => {
+  const query = 'SELECT * FROM HairStudioWomen';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/MakeupStudio', (req, res) => {
+  const query = 'SELECT * FROM MakeupStudio';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/SalonForMen', (req, res) => {
+  const query = 'SELECT * FROM SalonForMen';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/SalonMenRoyale', (req, res) => {
+  const query = 'SELECT * FROM SalonMenRoyale';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/SalonMenPrime', (req, res) => {
+  const query = 'SELECT * FROM SalonMenPrime';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+
+app.get('/api/MassageForMen', (req, res) => {
+  const query = 'SELECT * FROM MassageForMen';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/SpaMenPrime', (req, res) => {
+  const query = 'SELECT * FROM SpaMenPrime';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/SpaMenAyurveda', (req, res) => {
+  const query = 'SELECT * FROM SpaMenAyurveda';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/SpaMenRoyal', (req, res) => {
+  const query = 'SELECT * FROM SpaMenRoyal';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
 // Start server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
