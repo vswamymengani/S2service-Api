@@ -16,10 +16,10 @@ app.use(cors());
 
 // MySQL Connection
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 's2s'
+  host: 's2smsdatabase.cvme0g0k6zs6.ap-southeast-2.rds.amazonaws.com',
+  user: 'admin',
+  password: 'Taknev321$',
+  database: 's2sms'
 });
 
 const saltRounds = 10; // Salt rounds for bcrypt hashing
@@ -79,13 +79,13 @@ app.post('/registercustomer', (req, res) => {
       return res.json({ message: 'Server error' });
     }
 
-    const sql = 'INSERT INTO s2customer (fullname, gender, email, mobile, presentaddress, password, confirmpassword) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    const sql = 'INSERT INTO s2customer (fullname, gender,  mobile, presentaddress, email, password, confirmpassword) VALUES (?, ?, ?, ?, ?, ?, ?)';
     const values = [
       req.body.fullname,
       req.body.gender,
-      req.body.email,
       req.body.mobile,
       req.body.presentaddress,
+      req.body.email,
       hashedPassword,
       req.body.confirmpassword
     ];
@@ -289,9 +289,9 @@ app.get('/api/image/:id', (req, res) => {
   });
 });
 
-// API endpoint to fetch services
-app.get('/api/services', (req, res) => {
-  const query = 'SELECT * FROM services';
+// API endpoint to fetch services home page
+app.get('/api/s2services', (req, res) => {
+  const query = 'SELECT * FROM s2services';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -304,8 +304,8 @@ app.get('/api/services', (req, res) => {
 
 
 // API endpoint to fetch services
-app.get('/api/Appliancerepair', (req, res) => {
-  const query = 'SELECT * FROM Appliancerepair';
+app.get('/api/s2appliancerepair', (req, res) => {
+  const query = 'SELECT * FROM s2appliancerepair';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -316,21 +316,7 @@ app.get('/api/Appliancerepair', (req, res) => {
   });
 });
 
-// // Endpoint to insert image
-// app.post('/api/Appliancerepair', (req, res) => {
-//   const { name, category, imagePath } = req.body;
-//   fs.readFile(imagePath, (err, imageData) => {
-//       if (err) return res.status(500).send('Error reading image file');
 
-//       const query = 'INSERT INTO Appliancerepair (name, image) VALUES (?,?)';
-//       const values = [name, imageData];
-      
-//       db.query(query, values, (err) => {
-//           if (err) return res.status(500).send('Error inserting data');
-//           res.send('Image inserted successfully');
-//       });
-//   });
-// });
 
 // Endpoint to retrieve image
 app.get('/api/image/:id', (req, res) => {
@@ -380,22 +366,10 @@ app.get('/api/image/:id', (req, res) => {
   });
 });
 
-// API endpoint to fetch Appliancerepair
-// app.get('/api/Appliancerepair', (req, res) => {
-//   const query = 'SELECT * FROM Appliancerepair';
-//   db.query(query, (err, results) => {
-//     if (err) {
-//       console.error('Error fetching services:', err);
-//       res.status(500).send('Error fetching services');
-//       return;
-//     }
-//     res.json(results);
-//   });
-// });
 
 // // API endpoint to fetch AC
-app.get('/api/AC', (req, res) => {
-  const query = 'SELECT * FROM AC';
+app.get('/api/s2ac', (req, res) => {
+  const query = 'SELECT * FROM s2ac';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -418,44 +392,8 @@ app.get('/api/ChimneyService', (req, res) => {
   });
 });
 
-
-// app.get('/api/Appliancerepair/:id', (req, res) => {
-//   const AppliancerepairId = req.params.id;
-//   const query = 'SELECT * FROM Appliancerepair WHERE id = ?';
-//   db.query(query, [AppliancerepairId], (err, results) => {
-//     if (err) {
-//       console.error('Error fetching service details:', err);
-//       res.status(500).send('Error fetching service details');
-//       return;
-//     }
-//     if (results.length === 0) {
-//       res.status(404).send('Service not found');
-//       return;
-//     }
-//     res.json(results[0]);
-//   });
-// });
-
-// app.get('/api/image/:id', (req, res) => {
-//   const AppliancerepairId = req.params.id;
-//   const query = 'SELECT image FROM Appliancerepair WHERE id = ?';
-//   db.query(query, [AppliancerepairId], (err, results) => {
-//     if (err) {
-//       console.error('Error fetching image:', err);
-//       res.status(500).send('Error fetching image');
-//       return;
-//     }
-//     if (results.length === 0) {
-//       res.status(404).send('Image not found');
-//       return;
-//     }
-//     res.contentType('image/jpeg');
-//     res.send(results[0].image);
-//   });
-// });
-
-app.get('/api/GastoveService', (req, res) => {
-  const query = 'SELECT * FROM GastoveService';
+app.get('/api/s2gastoveservice', (req, res) => {
+  const query = 'SELECT * FROM s2gastoveservice';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -466,8 +404,8 @@ app.get('/api/GastoveService', (req, res) => {
   });
 });
 
-app.get('/api/GeyserService', (req, res) => {
-  const query = 'SELECT * FROM GeyserService';
+app.get('/api/s2geyserservice', (req, res) => {
+  const query = 'SELECT * FROM s2geyserservice';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -478,8 +416,8 @@ app.get('/api/GeyserService', (req, res) => {
   });
 });
 
-app.get('/api/InverterService', (req, res) => {
-  const query = 'SELECT * FROM InverterService';
+app.get('/api/s2inverterservice', (req, res) => {
+  const query = 'SELECT * FROM s2inverterservice';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -490,8 +428,8 @@ app.get('/api/InverterService', (req, res) => {
   });
 });
 
-app.get('/api/WaterPurifier', (req, res) => {
-  const query = 'SELECT * FROM WaterPurifier';
+app.get('/api/s2WaterPurifier', (req, res) => {
+  const query = 'SELECT * FROM s2WaterPurifier';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -502,8 +440,8 @@ app.get('/api/WaterPurifier', (req, res) => {
   });
 });
 
-app.get('/api/LaptopService', (req, res) => {
-  const query = 'SELECT * FROM LaptopService';
+app.get('/api/s2LaptopService', (req, res) => {
+  const query = 'SELECT * FROM s2LaptopService';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -514,8 +452,8 @@ app.get('/api/LaptopService', (req, res) => {
   });
 });
 
-app.get('/api/MicrowaveService', (req, res) => {
-  const query = 'SELECT * FROM MicrowaveService';
+app.get('/api/s2MicrowaveService', (req, res) => {
+  const query = 'SELECT * FROM s2MicrowaveService';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -526,8 +464,8 @@ app.get('/api/MicrowaveService', (req, res) => {
   });
 });
 
-app.get('/api/RefrigeratorService', (req, res) => {
-  const query = 'SELECT * FROM RefrigeratorService';
+app.get('/api/s2RefrigeratorService', (req, res) => {
+  const query = 'SELECT * FROM s2RefrigeratorService';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -538,8 +476,8 @@ app.get('/api/RefrigeratorService', (req, res) => {
   });
 });
 
-app.get('/api/TVService', (req, res) => {
-  const query = 'SELECT * FROM TVService';
+app.get('/api/s2TVService', (req, res) => {
+  const query = 'SELECT * FROM s2TVService';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -550,8 +488,8 @@ app.get('/api/TVService', (req, res) => {
   });
 });
 
-app.get('/api/WashingMachineService', (req, res) => {
-  const query = 'SELECT * FROM WashingMachineService';
+app.get('/api/s2WashingMachineService', (req, res) => {
+  const query = 'SELECT * FROM s2WashingMachineService';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -562,8 +500,8 @@ app.get('/api/WashingMachineService', (req, res) => {
   });
 });
 
-app.get('/api/HomeRepair', (req, res) => {
-  const query = 'SELECT * FROM HomeRepair';
+app.get('/api/s2HomeRepair', (req, res) => {
+  const query = 'SELECT * FROM s2HomeRepair';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -574,8 +512,8 @@ app.get('/api/HomeRepair', (req, res) => {
   });
 });
 
-app.get('/api/Electrician', (req, res) => {
-  const query = 'SELECT * FROM Electrician';
+app.get('/api/s2Electrician', (req, res) => {
+  const query = 'SELECT * FROM s2Electrician';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -585,20 +523,8 @@ app.get('/api/Electrician', (req, res) => {
     res.json(results);
   });
 });
-app.get('/api/Plumber', (req, res) => {
-  const query = 'SELECT * FROM Plumber';
-  db.query(query, (err, results) => {
-    if (err) {
-      console.error('Error fetching services:', err);
-      res.status(500).send('Error fetching services');
-      return;
-    }
-    res.json(results);
-  });
-});
-
-app.get('/api/Carpenter', (req, res) => {
-  const query = 'SELECT * FROM Carpenter';
+app.get('/api/s2Plumber', (req, res) => {
+  const query = 'SELECT * FROM s2Plumber';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -609,8 +535,8 @@ app.get('/api/Carpenter', (req, res) => {
   });
 });
 
-app.get('/api/CleaningService', (req, res) => {
-  const query = 'SELECT * FROM CleaningService';
+app.get('/api/s2Carpenter', (req, res) => {
+  const query = 'SELECT * FROM s2Carpenter';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -621,8 +547,8 @@ app.get('/api/CleaningService', (req, res) => {
   });
 });
 
-app.get('/api/Full_Home_Cleaning', (req, res) => {
-  const query = 'SELECT * FROM Full_Home_Cleaning';
+app.get('/api/s2CleaningService', (req, res) => {
+  const query = 'SELECT * FROM s2CleaningService';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -633,8 +559,8 @@ app.get('/api/Full_Home_Cleaning', (req, res) => {
   });
 });
 
-app.get('/api/KitchenCleanigService', (req, res) => {
-  const query = 'SELECT * FROM KitchenCleanigService';
+app.get('/api/s2Full_Home_Cleaning', (req, res) => {
+  const query = 'SELECT * FROM s2Full_Home_Cleaning';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -645,8 +571,8 @@ app.get('/api/KitchenCleanigService', (req, res) => {
   });
 });
 
-app.get('/api/SofaCleaningService', (req, res) => {
-  const query = 'SELECT * FROM SofaCleaningService';
+app.get('/api/s2KitchenCleanigService', (req, res) => {
+  const query = 'SELECT * FROM s2KitchenCleanigService';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -657,8 +583,8 @@ app.get('/api/SofaCleaningService', (req, res) => {
   });
 });
 
-app.get('/api/PestControlService', (req, res) => {
-  const query = 'SELECT * FROM PestControlService';
+app.get('/api/s2SofaCleaningService', (req, res) => {
+  const query = 'SELECT * FROM s2SofaCleaningService';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -669,8 +595,8 @@ app.get('/api/PestControlService', (req, res) => {
   });
 });
 
-app.get('/api/Cockroachcontrol', (req, res) => {
-  const query = 'SELECT * FROM Cockroachcontrol';
+app.get('/api/s2PestControlService', (req, res) => {
+  const query = 'SELECT * FROM s2PestControlService';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -681,8 +607,8 @@ app.get('/api/Cockroachcontrol', (req, res) => {
   });
 });
 
-app.get('/api/TermiteControl', (req, res) => {
-  const query = 'SELECT * FROM TermiteControl';
+app.get('/api/s2Cockroachcontrol', (req, res) => {
+  const query = 'SELECT * FROM s2Cockroachcontrol';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
@@ -693,8 +619,20 @@ app.get('/api/TermiteControl', (req, res) => {
   });
 });
 
-app.get('/api/BedBugsControl', (req, res) => {
-  const query = 'SELECT * FROM BedBugsControl';
+app.get('/api/s2TermiteControl', (req, res) => {
+  const query = 'SELECT * FROM s2TermiteControl';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching services:', err);
+      res.status(500).send('Error fetching services');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/api/s2BedBugsControl', (req, res) => {
+  const query = 'SELECT * FROM s2BedBugsControl';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching services:', err);
